@@ -1,0 +1,23 @@
+{
+    "name": "pms3003",
+    "description": "PMS3003 Air Quality Sensor extension for micro:bit — reads PM1.0, PM2.5, PM10 via UART serial",
+    "license": "MIT",
+    "version": "1.0.0",
+    "dependencies": {
+        "core": "*",
+        "serial": "*"
+    },
+    "files": [
+        "pms3003.ts",
+        "README.md"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "target": ">=1.0.0"
+    },
+    "supportedTargets": [
+        "microbit"
+    ]
+}
