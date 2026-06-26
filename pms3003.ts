@@ -37,7 +37,7 @@ namespace PMS3003 {
      * @param tx TX pin eg: PMS3003Pin.P0
      */
     //% blockId="pms3003_setup"
-    //% block="setup PMS3003 RX %rx TX %tx"
+    //% block="setup dust sensor RX %rx TX %tx"
     //% weight=100
     //% group="Setup"
     export function setup(rx: PMS3003Pin, tx: PMS3003Pin): void {
@@ -125,9 +125,13 @@ namespace PMS3003 {
     }
 
     /**
-     * Return the selected dust value for TypeScript use.
+     * Return the selected dust value.
      * @param type dust value type
      */
+    //% blockId="pms3003_value"
+    //% block="dust value %type"
+    //% weight=70
+    //% group="Display"
     export function getValue(type: PMType): number {
         if (type == PMType.PM1) return _pm1
         if (type == PMType.PM2_5) return _pm2_5
