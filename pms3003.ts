@@ -33,15 +33,15 @@ namespace PMS3003 {
 
     /**
      * Configure the PMS3003 sensor. Place this block in on start.
-     * @param rx RX pin eg: PMS3003Pin.P0
-     * @param tx TX pin eg: PMS3003Pin.P1
+     * @param rx RX pin eg: PMS3003Pin.P1
+     * @param tx TX pin eg: PMS3003Pin.P0
      */
     //% blockId="pms3003_setup"
     //% block="setup PMS3003 RX %rx TX %tx"
     //% weight=100
     //% group="Setup"
     export function setup(rx: PMS3003Pin, tx: PMS3003Pin): void {
-        serial.redirect(toSerialPin(rx), toSerialPin(tx), BaudRate.BaudRate9600)
+        serial.redirect(toSerialPin(tx), toSerialPin(rx), BaudRate.BaudRate9600)
         _initialized = true
         _isReading = false
         _rxBuffer = []

@@ -8,8 +8,8 @@ Read PM1.0 / PM2.5 / PM10 dust values from a PMS3003 sensor through UART serial.
 |---------|-----------|
 | VCC     | External 5V |
 | GND     | GND       |
-| TXD     | P0 (RX)   |
-| RXD     | P1 (TX)   |
+| TXD     | P1 (RX)   |
+| RXD     | P0 (TX)   |
 
 > The sensor requires 5V power. Do not power it directly from the micro:bit 3.3V pin.
 
@@ -17,7 +17,7 @@ Read PM1.0 / PM2.5 / PM10 dust values from a PMS3003 sensor through UART serial.
 
 ```
 on start:
-  setup PMS3003 RX [P0] TX [P1]
+  setup PMS3003 RX [P1] TX [P0]
 
 forever:
   read PMS3003
