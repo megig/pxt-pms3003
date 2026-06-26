@@ -17,7 +17,7 @@ Read PM1.0 / PM2.5 / PM10 dust values from a PMS3003 sensor through UART serial.
 
 ```
 on start:
-  setup dust sensor RX [P1] TX [P0]
+  setup dust sensor [PMS3003] RX [P1] TX [P0]
 
 forever:
   read dust sensor
@@ -29,7 +29,7 @@ forever:
 
 | Block | Purpose |
 |-------|---------|
-| `setup dust sensor RX _ TX _` | Set serial pins and baud rate. Place in on start. |
+| `setup dust sensor _ RX _ TX _` | Select PMS3003/PMS5003 and set serial pins. Place in on start. |
 | `read dust sensor` | Read a sensor frame. Place in forever. |
 | `show PM2.5` | Show the selected value on the LED matrix. |
 | `dust value PM2.5` | Return a number that can be placed inside MakeCode `show number`. |

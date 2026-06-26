@@ -21,6 +21,13 @@ enum PMS3003Pin {
     P2 = 2
 }
 
+enum DustSensorModel {
+    //% block="PMS3003"
+    PMS3003 = 0,
+    //% block="PMS5003"
+    PMS5003 = 1
+}
+
 //% color="#2ecc71" weight=80 icon="\uf72e" block="PMS3003"
 namespace PMS3003 {
 
@@ -29,18 +36,21 @@ namespace PMS3003 {
     let _pm10 = 0
     let _isReading = false
     let _initialized = false
+    let _model = DustSensorModel.PMS3003
 
     /**
      * Configure the PMS3003 sensor. Place this block in on start.
+     * @param model sensor model eg: DustSensorModel.PMS3003
      * @param rx RX pin eg: PMS3003Pin.P1
      * @param tx TX pin eg: PMS3003Pin.P0
      */
     //% blockId="pms3003_setup"
-    //% block="setup dust sensor RX %rx TX %tx"
+    //% block="setup dust sensor %model RX %rx TX %tx"
     //% weight=100
     //% group="Setup"
-    export function setup(rx: PMS3003Pin, tx: PMS3003Pin): void {
+    export function setup(model: DustSensorModel, rx: PMS3003Pin, tx: PMS3003Pin): void {
         serial.redirect(toSerialPin(tx), toSerialPin(rx), BaudRate.BaudRate9600)
+        _model = model
         _initialized = true
         _isReading = false
     }
@@ -80,9 +90,10 @@ namespace PMS3003 {
             return
         }
 
-        let newPm1 = rest[2] * 256 + rest[3]
-        let newPm2_5 = rest[4] * 256 + rest[5]
-        let newPm10 = rest[6] * 256 + rest[7]
+        let offset = _model == DustSensorModel.PMS5003 ? 8 : 2
+        let newPm1 = rest[offset] * 256 + rest[offset + 1]
+        let newPm2_5 = rest[offset + 2] * 256 + rest[offset + 3]
+        let newPm10 = rest[offset + 4] * 256 + rest[offset + 5]
 
         if (newPm1 <= 999 && newPm2_5 <= 999 && newPm10 <= 999) {
             _pm1 = newPm1

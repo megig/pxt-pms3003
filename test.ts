@@ -2,7 +2,7 @@
 // Add this code in MakeCode for testing.
 
 // === on start ===
-PMS3003.setup(PMS3003Pin.P0, PMS3003Pin.P1)
+PMS3003.setup(DustSensorModel.PMS3003, PMS3003Pin.P1, PMS3003Pin.P0)
 
 // === forever ===
 basic.forever(function () {
