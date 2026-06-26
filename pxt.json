@@ -1,0 +1,20 @@
+{
+    "name": "pxt-pms3003",
+    "description": "PMS3003 Air Quality Sensor for micro:bit",
+    "license": "MIT",
+    "version": "1.0.2",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "pms3003.ts",
+        "README.md"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "tsprj"
+}
