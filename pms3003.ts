@@ -45,9 +45,6 @@ namespace PMS3003 {
         _initialized = true
         _isReading = false
         _rxBuffer = []
-        basic.showIcon(IconNames.Yes)
-        basic.pause(500)
-        basic.clearScreen()
     }
 
     function toSerialPin(pin: PMS3003Pin): SerialPin {
