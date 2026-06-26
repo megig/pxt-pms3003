@@ -29,7 +29,6 @@ namespace PMS3003 {
     let _pm10 = 0
     let _isReading = false
     let _initialized = false
-    let _rxBuffer: number[] = []
 
     /**
      * Configure the PMS3003 sensor. Place this block in on start.
@@ -44,7 +43,6 @@ namespace PMS3003 {
         serial.redirect(toSerialPin(tx), toSerialPin(rx), BaudRate.BaudRate9600)
         _initialized = true
         _isReading = false
-        _rxBuffer = []
     }
 
     function toSerialPin(pin: PMS3003Pin): SerialPin {
@@ -64,45 +62,32 @@ namespace PMS3003 {
         if (!_initialized || _isReading) return
         _isReading = true
 
-        let data = serial.readBuffer(0)
-        for (let i = 0; i < data.length; i++) {
-            _rxBuffer.push(data[i])
+        let b1 = serial.readBuffer(1)
+        if (b1[0] != 0x42) {
+            _isReading = false
+            return
         }
 
-        while (_rxBuffer.length > 96) {
-            _rxBuffer.removeAt(0)
+        let b2 = serial.readBuffer(1)
+        if (b2[0] != 0x4D) {
+            _isReading = false
+            return
         }
 
-        while (_rxBuffer.length >= 32) {
-            if (_rxBuffer[0] != 0x42 || _rxBuffer[1] != 0x4D) {
-                _rxBuffer.removeAt(0)
-                continue
-            }
+        let rest = serial.readBuffer(30)
+        if (rest.length < 30) {
+            _isReading = false
+            return
+        }
 
-            let checksum = 0
-            for (let i = 0; i < 30; i++) {
-                checksum += _rxBuffer[i]
-            }
+        let newPm1 = rest[2] * 256 + rest[3]
+        let newPm2_5 = rest[4] * 256 + rest[5]
+        let newPm10 = rest[6] * 256 + rest[7]
 
-            let csFrame = _rxBuffer[30] * 256 + _rxBuffer[31]
-            if (checksum != csFrame) {
-                _rxBuffer.removeAt(0)
-                continue
-            }
-
-            let newPm1 = _rxBuffer[4] * 256 + _rxBuffer[5]
-            let newPm2_5 = _rxBuffer[6] * 256 + _rxBuffer[7]
-            let newPm10 = _rxBuffer[8] * 256 + _rxBuffer[9]
-
-            if (newPm1 <= 999 && newPm2_5 <= 999 && newPm10 <= 999) {
-                _pm1 = newPm1
-                _pm2_5 = newPm2_5
-                _pm10 = newPm10
-            }
-
-            for (let i = 0; i < 32; i++) {
-                _rxBuffer.removeAt(0)
-            }
+        if (newPm1 <= 999 && newPm2_5 <= 999 && newPm10 <= 999) {
+            _pm1 = newPm1
+            _pm2_5 = newPm2_5
+            _pm10 = newPm10
         }
 
         _isReading = false
