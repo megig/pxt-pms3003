@@ -1,41 +1,41 @@
 # PMS3003 Extension for micro:bit
 
-อ่านค่าฝุ่น PM1.0 / PM2.5 / PM10 จากเซนเซอร์ PMS3003 ผ่าน UART Serial
+Read PM1.0 / PM2.5 / PM10 dust values from a PMS3003 sensor through UART serial.
 
-## การต่อสาย
+## Wiring
 
 | PMS3003 | micro:bit |
 |---------|-----------|
-| VCC     | 5V (ภายนอก) |
+| VCC     | External 5V |
 | GND     | GND       |
 | TXD     | P0 (RX)   |
 | RXD     | P1 (TX)   |
 
-> ⚠️ เซนเซอร์ต้องการไฟ 5V — ห้ามต่อกับ 3.3V ของ micro:bit โดยตรง
+> The sensor requires 5V power. Do not power it directly from the micro:bit 3.3V pin.
 
-## การใช้งาน (Blocks)
+## Usage (Blocks)
 
 ```
-เมื่อเริ่มต้น:
-  ตั้งค่า PMS3003 RX [P0] TX [P1]
+on start:
+  setup PMS3003 RX [P0] TX [P1]
 
-ตลอดเวลา:
-  อ่านค่า PMS3003
-  แสดงค่า [PM2.5]
-  หยุด 2000 ms
+forever:
+  read PMS3003
+  show [PM2.5]
+  pause 2000 ms
 ```
 
-## บล็อกที่มี
+## Blocks
 
-| บล็อก | หน้าที่ |
+| Block | Purpose |
 |-------|---------|
-| `ตั้งค่า PMS3003 RX _ TX _` | กำหนดขาและ baud rate — ใส่ใน on start |
-| `อ่านค่า PMS3003` | อ่าน frame จากเซนเซอร์ — ใส่ใน forever |
-| `แสดงค่า PM2.5` | แสดงตัวเลขบน LED matrix |
+| `setup PMS3003 RX _ TX _` | Set serial pins and baud rate. Place in on start. |
+| `read PMS3003` | Read a sensor frame. Place in forever. |
+| `show PM2.5` | Show the selected value on the LED matrix. |
 
-## ติดตั้ง Extension
+## Install Extension
 
-1. เปิด [MakeCode micro:bit](https://makecode.microbit.org)
-2. สร้างโปรเจกต์ใหม่
-3. คลิก **Extensions** → วาง GitHub URL ของ repo นี้
-4. บล็อก PMS3003 จะปรากฏในแถบด้านซ้าย
+1. Open [MakeCode micro:bit](https://makecode.microbit.org).
+2. Create a new project.
+3. Click **Extensions** and paste this repository URL.
+4. The PMS3003 block category will appear in the toolbox.

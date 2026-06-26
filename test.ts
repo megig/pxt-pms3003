@@ -1,5 +1,5 @@
-// ตัวอย่างการใช้งาน PMS3003 Extension
-// ใส่โค้ดนี้ใน MakeCode เพื่อทดสอบ
+// PMS3003 extension usage example
+// Add this code in MakeCode for testing.
 
 // === on start ===
 PMS3003.setup(PMS3003Pin.P0, PMS3003Pin.P1)

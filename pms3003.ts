@@ -2,7 +2,7 @@
  * PMS3003 Air Quality Sensor Extension for micro:bit
  */
 
-// enum ต้องอยู่นอก namespace เสมอใน MakeCode
+// Enums must stay outside the namespace for MakeCode blocks.
 enum PMType {
     //% block="PM1.0"
     PM1 = 0,
@@ -34,14 +34,14 @@ namespace PMS3003 {
     let _rxBuffer: number[] = []
 
     /**
-     * ตั้งค่าเซนเซอร์ PMS3003 ใส่ใน on start
-     * @param rx ขา RX eg: PMS3003Pin.P0
-     * @param tx ขา TX eg: PMS3003Pin.P1
+     * Configure the PMS3003 sensor. Place this block in on start.
+     * @param rx RX pin eg: PMS3003Pin.P0
+     * @param tx TX pin eg: PMS3003Pin.P1
      */
     //% blockId="pms3003_setup"
-    //% block="ตั้งค่า PMS3003 RX %rx TX %tx"
+    //% block="setup PMS3003 RX %rx TX %tx"
     //% weight=100
-    //% group="ตั้งค่า"
+    //% group="Setup"
     export function setup(rx: PMS3003Pin, tx: PMS3003Pin): void {
         serial.redirect(toSerialPin(rx), toSerialPin(tx), BaudRate.BaudRate9600)
         _initialized = true
@@ -60,12 +60,12 @@ namespace PMS3003 {
     }
 
     /**
-     * อ่านค่าฝุ่นจากเซนเซอร์ ใส่ใน forever
+     * Read dust values from the sensor. Place this block in forever.
      */
     //% blockId="pms3003_read"
-    //% block="อ่านค่า PMS3003"
+    //% block="read PMS3003"
     //% weight=90
-    //% group="อ่านค่า"
+    //% group="Read"
     export function readSensor(): void {
         if (!_initialized || _isReading) return
         _isReading = true
@@ -115,13 +115,13 @@ namespace PMS3003 {
     }
 
     /**
-     * แสดงค่าฝุ่นบนหน้าจอ micro:bit
-     * @param type ประเภทฝุ่น
+     * Show the selected dust value on the micro:bit display.
+     * @param type dust value type
      */
     //% blockId="pms3003_show"
-    //% block="แสดงค่า %type"
+    //% block="show %type"
     //% weight=80
-    //% group="แสดงผล"
+    //% group="Display"
     export function showValue(type: PMType): void {
         let val = 0
         if (type == PMType.PM1) val = _pm1
@@ -131,8 +131,8 @@ namespace PMS3003 {
     }
 
     /**
-     * คืนค่าตัวเลขฝุ่น ใช้กับ serial หรือ radio
-     * @param type ประเภทฝุ่น
+     * Return the selected dust value for TypeScript use.
+     * @param type dust value type
      */
     export function getValue(type: PMType): number {
         if (type == PMType.PM1) return _pm1
