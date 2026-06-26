@@ -18,9 +18,7 @@ enum PMS3003Pin {
     //% block="P1"
     P1 = 1,
     //% block="P2"
-    P2 = 2,
-    //% block="P3"
-    P3 = 3
+    P2 = 2
 }
 
 //% color="#2ecc71" weight=80 icon="\uf72e" block="PMS3003"
@@ -55,8 +53,7 @@ namespace PMS3003 {
     function toSerialPin(pin: PMS3003Pin): SerialPin {
         if (pin == PMS3003Pin.P0) return SerialPin.P0
         if (pin == PMS3003Pin.P1) return SerialPin.P1
-        if (pin == PMS3003Pin.P2) return SerialPin.P2
-        return SerialPin.P3
+        return SerialPin.P2
     }
 
     /**
