@@ -55,7 +55,7 @@ namespace PMS3003 {
      * Read dust values from the sensor. Place this block in forever.
      */
     //% blockId="pms3003_read"
-    //% block="read PMS3003"
+    //% block="read dust sensor"
     //% weight=90
     //% group="Read"
     export function readSensor(): void {

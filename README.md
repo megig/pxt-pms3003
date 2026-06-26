@@ -20,7 +20,7 @@ on start:
   setup dust sensor RX [P1] TX [P0]
 
 forever:
-  read PMS3003
+  read dust sensor
   show number [dust value PM2.5]
   pause 2000 ms
 ```
@@ -30,7 +30,7 @@ forever:
 | Block | Purpose |
 |-------|---------|
 | `setup dust sensor RX _ TX _` | Set serial pins and baud rate. Place in on start. |
-| `read PMS3003` | Read a sensor frame. Place in forever. |
+| `read dust sensor` | Read a sensor frame. Place in forever. |
 | `show PM2.5` | Show the selected value on the LED matrix. |
 | `dust value PM2.5` | Return a number that can be placed inside MakeCode `show number`. |
 
