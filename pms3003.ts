@@ -12,6 +12,17 @@ enum PMType {
     PM10 = 2
 }
 
+enum PMS3003Pin {
+    //% block="P0"
+    P0 = 0,
+    //% block="P1"
+    P1 = 1,
+    //% block="P2"
+    P2 = 2,
+    //% block="P3"
+    P3 = 3
+}
+
 //% color="#2ecc71" weight=80 icon="\uf72e" block="PMS3003"
 namespace PMS3003 {
 
@@ -23,17 +34,24 @@ namespace PMS3003 {
 
     /**
      * ตั้งค่าเซนเซอร์ PMS3003 ใส่ใน on start
-     * @param rx ขา RX eg: SerialPin.P0
-     * @param tx ขา TX eg: SerialPin.P1
+     * @param rx ขา RX eg: PMS3003Pin.P0
+     * @param tx ขา TX eg: PMS3003Pin.P1
      */
     //% blockId="pms3003_setup"
     //% block="ตั้งค่า PMS3003 RX %rx TX %tx"
     //% weight=100
     //% group="ตั้งค่า"
-    export function setup(rx: SerialPin, tx: SerialPin): void {
-        serial.redirect(rx, tx, BaudRate.BaudRate9600)
+    export function setup(rx: PMS3003Pin, tx: PMS3003Pin): void {
+        serial.redirect(toSerialPin(tx), toSerialPin(rx), BaudRate.BaudRate9600)
         _initialized = true
         _isReading = false
+    }
+
+    function toSerialPin(pin: PMS3003Pin): SerialPin {
+        if (pin == PMS3003Pin.P0) return SerialPin.P0
+        if (pin == PMS3003Pin.P1) return SerialPin.P1
+        if (pin == PMS3003Pin.P2) return SerialPin.P2
+        return SerialPin.P3
     }
 
     /**
@@ -96,10 +114,6 @@ namespace PMS3003 {
      * คืนค่าตัวเลขฝุ่น ใช้กับ serial หรือ radio
      * @param type ประเภทฝุ่น
      */
-    //% blockId="pms3003_get"
-    //% block="ค่า %type"
-    //% weight=70
-    //% group="แสดงผล"
     export function getValue(type: PMType): number {
         if (type == PMType.PM1) return _pm1
         if (type == PMType.PM2_5) return _pm2_5
